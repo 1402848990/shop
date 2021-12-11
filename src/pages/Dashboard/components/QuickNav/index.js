@@ -19,35 +19,35 @@ const MOCK_DATA = [
     to: '/goods',
   },
   {
-    title: '预约管理',
+    title: '类目管理',
     icon: 'cart',
     color: '#ee706d',
-    to: '/reserve',
+    to: '/categoryManage',
   },
   {
     title: '订单管理',
     icon: 'cart',
     color: '#58ca9a',
-    to: '/order',
+    to: '/orderManage',
   },
   {
-    title: '会员管理',
-    icon: 'cart',
+    title: '机器/门店管理',
+    icon: 'machine',
     color: '#58ca9a',
-    to: '/membership',
+    to: '/machine',
   },
   {
-    title: '添加商品',
+    title: '预警商品',
     icon: 'cart',
-    color: '#447eff',
-    to: '/add/goods',
+    color: '#d93737',
+    to: '/warnGoods',
   },
 ];
 
 export default class QuickNav extends Component {
   render() {
     return (
-      <IceContainer title="常用导航">
+      <IceContainer title="便捷导航">
         <Row wrap gutter="20" style={{ marginBottom: '20px' }}>
           {MOCK_DATA.map((item, index) => {
             return (

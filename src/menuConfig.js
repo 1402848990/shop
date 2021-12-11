@@ -33,12 +33,17 @@ const asideMenuConfig = [
   {
     name: '资产管理',
     path: '/asset',
-    icon: 'cascades',
+    icon: 'rmb',
   },
   {
     name: '商品管理',
     path: '/goods',
-    icon: 'shopcar',
+    icon: 'item',
+  },
+  {
+    name: '预警商品',
+    path: '/warnGoods',
+    icon: 'notice',
   },
   {
     name: '添加商品',
@@ -46,25 +51,50 @@ const asideMenuConfig = [
     icon: 'publish',
   },
   {
-    name: '预约管理',
-    path: '/reserve',
-    icon: 'clock',
-  },
-  {
-    name: '添加预约',
-    path: '/add/reserve',
-    icon: 'edit2',
+    name: '类目管理',
+    path: '/categoryManage',
+    icon: 'ul-list',
   },
   {
     name: '订单管理',
-    path: '/order',
+    path: '/orderManage',
     icon: 'shopcar',
   },
   {
-    name: '会员管理',
-    path: '/membership',
-    icon: 'menu',
+    name: '机器/门店管理',
+    path: '/machine',
+    icon: 'shop',
   },
+  {
+    name: '添加机器/门店',
+    path: '/add/machine',
+    icon: 'shezhi',
+  },
+  {
+    name: '区域负责人管理',
+    path: '/contact',
+    icon: 'fans',
+  },
+  // {
+  //   name: '预约管理',
+  //   path: '/reserve',
+  //   icon: 'clock',
+  // },
+  // {
+  //   name: '添加预约',
+  //   path: '/add/reserve',
+  //   icon: 'edit2',
+  // },
+  // {
+  //   name: '订单管理',
+  //   path: '/order',
+  //   icon: 'shopcar',
+  // },
+  // {
+  //   name: '会员管理',
+  //   path: '/membership',
+  //   icon: 'menu',
+  // },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

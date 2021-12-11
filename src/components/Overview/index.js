@@ -13,7 +13,7 @@ export default class Overview extends Component {
         alignEdge
         closable={false}
       >
-        相关说明
+        当前方式全部入账金额
       </Balloon>
     );
   };

@@ -13,14 +13,19 @@ export default class Asset extends Component {
   render() {
     const panes = [
       {
-        tab: '提现',
+        tab: '全部',
         key: 0,
-        content: <AssetTable />,
+        content: <AssetTable billList={this.props.billList} />,
       },
       {
-        tab: '退款',
+        tab: '微信',
         key: 1,
-        content: <AssetTable />,
+        content: <AssetTable billList={this.props.billList?.filter(i => i.payWay)} />,
+      },
+      {
+        tab: '支付宝',
+        key: 2,
+        content: <AssetTable billList={this.props.billList?.filter(i => !i.payWay)} />,
       },
     ];
 

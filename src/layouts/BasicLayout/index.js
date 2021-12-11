@@ -26,7 +26,7 @@ export default class BasicLayout extends Component {
             <div className="main-container">
               <MainRoutes />
             </div>
-            <Footer />
+            {/* <Footer /> */}
           </Layout.Main>
         </Layout.Section>
       </Layout>

@@ -1,31 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Overview from '../../components/Overview';
 import PageHead from '../../components/PageHead';
 import AssetTab from './components/AssetTab';
+import { getAssestList } from '../../services';
 
-const MOCK_DATA = [
-  {
-    title: '可用余额(元)',
-    value: '0.00',
-  },
-  {
-    title: '待结算(元)',
-    value: '0.00',
-  },
-  {
-    title: '储值资金(元)',
-    value: '0.00',
-  },
-];
+export default function Index() {
+  const [billList, setBillList] = useState([]);
 
-export default class Asset extends Component {
-  render() {
-    return (
-      <div>
-        <PageHead title="资产管理" />
-        <Overview data={MOCK_DATA} col="3" />
-        <AssetTab />
-      </div>
-    );
-  }
+  const totalData = [
+    {
+      title: '全部总入账(元)',
+      value: billList.reduce((pre, curr) => +pre + +curr.amount, 0),
+    },
+    {
+      title: '支付宝总入账(元)',
+      value: billList.filter(i => !i.payWay).reduce((pre, curr) => +pre + +curr.amount, 0),
+    },
+    {
+      title: '微信总入账(元)',
+      value: billList.filter(i => i.payWay).reduce((pre, curr) => +pre + +curr.amount, 0),
+    },
+  ];
+
+  // 获取账单列表
+  const fetchBillList = async (filter = {}) => {
+    const res = await getAssestList(filter);
+    setBillList(res);
+  };
+
+  useEffect(() => {
+    fetchBillList();
+  }, []);
+
+  return (
+    <div>
+      <PageHead title="资产管理" />
+      <Overview data={totalData} col="3" />
+      <AssetTab billList={billList} />
+    </div>
+  );
 }

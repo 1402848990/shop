@@ -17,32 +17,21 @@ export default class BasicLayout extends Component {
 
     return (
       <div className="aside-custom-menu">
-        <Logo
-          style={{
-            height: '62px',
-            fontSize: '30px',
-            marginRight: '0',
-            background: '#fff',
-            justifyContent: 'center',
-            borderBottom: '1px solid #f5f5f5',
-          }}
-        />
+        <p style={{ color: '#3080fe', fontSize: '22px', textAlign: 'center', lineHeight: '62px', letterSpacing: '4px' }}>智慧监控分析系统</p>
         <div className="user-info">
-          <IceImg
+          {/* <IceImg
             height={40}
             width={40}
             src={require('./images/avatar.png')}
             className="user-avatar"
-          />
-          <div className="user-profile">
+          /> */}
+          {/* <div className="user-profile">
             <span className="user-name" style={{ fontSize: '13px' }}>
-              淘小宝
+              Admin
             </span>
-            <br />
-            <span className="user-department">技术部</span>
-          </div>
+          </div> */}
         </div>
-
+        {/* 渲染侧边导航栏 */}
         <Nav
           selectedKeys={[pathname]}
           className="ice-menu-custom"

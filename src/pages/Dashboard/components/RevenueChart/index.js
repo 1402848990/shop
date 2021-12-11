@@ -2,23 +2,32 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Grid, Balloon, Icon } from '@alifd/next';
 import DonutChart from './DonutChart';
+import { getTimeStamp } from '../../../../utils';
+import Line from './Lines';
 
 const { Row, Col } = Grid;
 
 export default class RevenueChart extends Component {
   render() {
+    const { billList = [] } = this.props;
+    const { month: { start } } = getTimeStamp();
+    const zfbValue = billList.filter(i => !i.payWay).reduce((pre, curr) => +pre + +curr.amount, 0);
+    const wxValue = billList.filter(i => i.payWay).reduce((pre, curr) => +pre + +curr.amount, 0);
+    const zfbValueM = billList.filter(i => !i.payWay && i.createdAt > start).reduce((pre, curr) => +pre + +curr.amount, 0);
+    const wxValueM = billList.filter(i => i.payWay && i.createdAt > start).reduce((pre, curr) => +pre + +curr.amount, 0);
+
     return (
       <IceContainer title="收入概览">
         <Row>
           <Col l="8">
-            <DonutChart />
+            <DonutChart zfbValue={zfbValue} wxValue={wxValue} />
           </Col>
           <Col l="16">
             <div style={styles.profile}>
               <div style={styles.cell}>
                 <div style={styles.head}>
                   <span style={{ ...styles.circle, ...styles.purple }} />
-                  <div style={styles.cellTitle}>实体店收入</div>
+                  <div style={styles.cellTitle}>支付宝总收入</div>
                   <Balloon
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
@@ -27,22 +36,22 @@ export default class RevenueChart extends Component {
                     triggerType="hover"
                     style={{ width: 300 }}
                   >
-                    实体店收入的相关简介
+                    支付宝总收入
                   </Balloon>
                 </div>
                 <div style={styles.body}>
-                  <span style={styles.costValue}>567.89</span>
-                  <span style={styles.costUnit}>万元</span>
+                  <span style={styles.costValue}>{zfbValue.toFixed(2) || 0}</span>
+                  <span style={styles.costUnit}>元</span>
                 </div>
                 <div style={styles.footer}>
-                  <span style={styles.footerText}>环比</span>
-                  <span style={styles.footerValue}>66.99%</span>
+                  <span style={styles.footerText}>当月</span>
+                  <span style={styles.footerValue}>+{zfbValueM.toFixed(2)}元</span>
                 </div>
               </div>
               <div style={styles.cell}>
                 <div style={styles.head}>
                   <span style={{ ...styles.circle, ...styles.green }} />
-                  <div style={styles.cellTitle}>网上零售收入</div>
+                  <div style={styles.cellTitle}>微信总收入</div>
                   <Balloon
                     trigger={<Icon type="prompt" size="small" />}
                     align="t"
@@ -51,20 +60,24 @@ export default class RevenueChart extends Component {
                     triggerType="hover"
                     style={{ width: 300 }}
                   >
-                    网上零售收入的相关简介
+                    微信总收入
                   </Balloon>
                 </div>
                 <div style={styles.body}>
-                  <span style={styles.costValue}>123,45</span>
-                  <span style={styles.costUnit}>万元</span>
+                  <span style={styles.costValue}>{wxValue.toFixed(2) || 0}</span>
+                  <span style={styles.costUnit}>元</span>
                 </div>
                 <div style={styles.footer}>
-                  <span style={styles.footerText}>环比</span>
-                  <span style={styles.footerValue}>18.88%</span>
+                  <span style={styles.footerText}>当月</span>
+                  <span style={styles.footerValue}>+{wxValueM.toFixed(2)}元</span>
                 </div>
               </div>
             </div>
           </Col>
+        </Row>
+        <Row>
+          <Col l="10" offset="1"> <Line billList={billList} /></Col>
+          <Col l="10" offset="2"> <Line /></Col>
         </Row>
       </IceContainer>
     );
@@ -123,7 +136,7 @@ const styles = {
   footer: {
     display: 'flex',
     marginTop: '10px',
-    fontSize: '12px',
+    fontSize: '14px',
     color: '#999',
   },
   footerText: {

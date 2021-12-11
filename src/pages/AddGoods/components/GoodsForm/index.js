@@ -1,173 +1,139 @@
+/* eslint-disable no-unused-expressions */
 /* eslint react/no-string-refs:0 */
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import IceContainer from '@icedesign/container';
-import {
-  Input,
-  Button,
-  Message,
-  NumberPicker,
-  DatePicker,
-  Radio,
-  Select,
-} from '@alifd/next';
-import {
-  FormBinderWrapper as IceFormBinderWrapper,
-  FormBinder as IceFormBinder,
-  FormError as IceFormError,
-} from '@icedesign/form-binder';
+import { Message } from '@alifd/next';
+import { withRouter } from 'react-router-dom';
+import { getCategoryList, addGood, getGoodDetail, updateGood } from '../../../../services';
 import PageHead from '../../../../components/PageHead';
+import BaseForm from '../../../../common/BaseForm';
+import moment from 'moment';
 
-const { Option } = Select;
-const { Group: RadioGroup } = Radio;
-const { RangePicker } = DatePicker;
+export default withRouter((props) => {
+  // 编辑时从url获取商品id
+  const { id: goodId } = props.match.params || {};
 
-export default class GoodsForm extends Component {
-  state = {
-    value: {},
-  };
+  const formRef = useRef(null);
 
-  formChange = (value) => {
-    console.log('value', value);
-  };
+  const [categoryList, setCategoryList] = useState([]);
 
-  validateAllFormField = () => {
-    this.refs.form.validateAll((errors, values) => {
-      if (errors) {
-        return;
-      }
-      console.log({ values });
-      Message.success('提交成功');
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <PageHead title="添加商品" />
-        <IceContainer style={{ padding: '40px' }}>
-          <IceFormBinderWrapper
-            value={this.state.value}
-            onChange={this.formChange}
-            ref="form"
-          >
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>商品名称：</div>
-              <IceFormBinder name="goodsName" required message="商品名称必填">
-                <Input
-                  placeholder="请输入商品名称"
-                  style={{ width: '400px' }}
-                />
-              </IceFormBinder>
-              <div style={styles.formError}>
-                <IceFormError name="goodsName" />
-              </div>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>条形码：</div>
-              <IceFormBinder name="code">
-                <Input
-                  placeholder="请输入数字条形码"
-                  style={{ width: '400px' }}
-                />
-              </IceFormBinder>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>库存量：</div>
-              <IceFormBinder name="stock" required message="联系方式必填">
-                <NumberPicker />
-              </IceFormBinder>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>商品标签：</div>
-              <IceFormBinder name="bookName">
-                <Select
-                  placeholder="请选择"
-                  mode="multiple"
-                  style={{ width: '400px' }}
-                >
-                  <Option value="1">新品</Option>
-                  <Option value="2">数码</Option>
-                  <Option value="3">智能</Option>
-                  <Option value="4">生活</Option>
-                </Select>
-              </IceFormBinder>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>商品价格：</div>
-              <IceFormBinder name="price" required message="商品价格必填">
-                <Input
-                  placeholder="请输入商品价格: ￥199.99"
-                  style={{ width: '400px' }}
-                />
-              </IceFormBinder>
-              <div style={styles.formError}>
-                <IceFormError name="price" />
-              </div>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>预售时间：</div>
-              <IceFormBinder name="reverseTime">
-                <RangePicker style={{ width: '400px' }} />
-              </IceFormBinder>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>预约条件：</div>
-              <IceFormBinder name="payment">
-                <RadioGroup
-                  dataSource={[
-                    {
-                      value: '1',
-                      label: '需要支付',
-                    },
-                    {
-                      value: '2',
-                      label: '无需支付',
-                    },
-                  ]}
-                />
-              </IceFormBinder>
-            </div>
-            <div style={styles.formItem}>
-              <div style={styles.formLabel}>体验展示：</div>
-              <IceFormBinder name="show">
-                <RadioGroup
-                  dataSource={[
-                    {
-                      value: '1',
-                      label: '展示',
-                    },
-                    {
-                      value: '2',
-                      label: '不展示',
-                    },
-                  ]}
-                />
-              </IceFormBinder>
-            </div>
-            <Button type="primary" onClick={this.validateAllFormField}>
-              提 交
-            </Button>
-          </IceFormBinderWrapper>
-        </IceContainer>
-      </div>
-    );
+  // 获取类目列表
+  async function fetchCategoryList() {
+    const res = await getCategoryList();
+    setCategoryList(res);
   }
-}
 
-const styles = {
-  formItem: {
-    marginBottom: '30px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  formLabel: {
-    fontWeight: '450',
-    width: '80px',
-  },
-  formError: {
-    marginTop: '10px',
-  },
-  button: {
-    marginLeft: '100px',
-  },
-};
+  // 获取商品详情
+  async function fetchGoodDetail() {
+    console.log('goodId', goodId);
+    console.log('formRef', formRef);
+    if (goodId) {
+      const res = await getGoodDetail(goodId);
+      console.log('res', res);
+      res.expiresAt = moment(+res.expiresAt);
+      formRef?.current?.setFieldsValue(res);
+    }
+  }
+
+  useEffect(() => {
+    fetchCategoryList();
+    fetchGoodDetail();
+  }, []);
+
+  // 提交方法
+  const onSubmit = async (values) => {
+    console.log('values', values);
+    values.expiresAt ? values.expiresAt = values.expiresAt.valueOf() : null;
+    values.salePrice ? null : delete values.salePrice;
+    values.isDiscount = values.isDiscount ? 1 : 0;
+    values.categoryId = +values.categoryId;
+    values.categoryName = categoryList.find(
+      i => i.id === values.categoryId
+    ).categoryName;
+    // 分为新增商品跟修改商品两种情况
+    goodId ? await updateGood({ ...values, id: goodId }) : await addGood(values);
+    Message.success('商品提交成功');
+  };
+
+  // 表单的配置项
+  const columns = [
+    {
+      name: '商品名',
+      field: 'name',
+      required: true,
+    },
+    {
+      name: '商品描述',
+      field: 'desc',
+      required: true,
+    },
+    {
+      name: '库存量',
+      field: 'stock',
+      required: true,
+      type: 'inputNumber',
+      // defaultValue: 30,
+    },
+    {
+      name: '商品类目',
+      field: 'categoryId',
+      required: true,
+      type: 'select',
+      option: categoryList.map((i) => {
+        return { label: i.categoryName, value: +i.id };
+      }),
+    },
+    {
+      name: '成本价',
+      field: 'rootPrice',
+      required: true,
+      type: 'inputNumber',
+      others: { addonAfter: '元' },
+    },
+    {
+      name: '商品价格',
+      field: 'price',
+      required: true,
+      type: 'inputNumber',
+      others: { addonAfter: '元' },
+    },
+    {
+      name: '到期日期',
+      field: 'expiresAt',
+      required: true,
+      type: 'datePicker',
+    },
+    {
+      name: '是否折扣',
+      field: 'isDiscount',
+      type: 'switch',
+    },
+    {
+      name: '折后价格',
+      field: 'salePrice',
+      type: 'inputNumber',
+      others: { addonAfter: '元' },
+    },
+  ];
+
+  return (
+    <div>
+      <PageHead title="添加商品" />
+      <IceContainer style={{ padding: '40px' }}>
+        <BaseForm
+          ref={formRef}
+          onSubmit={onSubmit}
+          others={{
+            labelCol: { span: 3 },
+            wrapperCol: { span: 8 },
+            initialValues: {
+              stock: 30,
+              isDiscount: false,
+            },
+          }}
+          columns={columns}
+        />
+      </IceContainer>
+    </div>
+  );
+});

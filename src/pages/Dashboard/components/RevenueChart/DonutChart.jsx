@@ -4,18 +4,22 @@ import DataSet from '@antv/data-set';
 
 export default class DonutChart extends Component {
   render() {
+    const { wxValue, zfbValue } = this.props;
+    const allValue = wxValue + zfbValue;
     const { DataView } = DataSet;
     const { Html } = Guide;
+
+    console.log(((zfbValue / allValue) * 100));
 
     // MOCK 数据，实际业务按需进行替换
     const data = [
       {
-        item: '实体收入',
-        count: 40,
+        item: '支付宝收入',
+        count: +((zfbValue / allValue) * 100).toFixed(2),
       },
       {
-        item: '网店收入',
-        count: 21,
+        item: '微信收入',
+        count: +((wxValue / allValue) * 100).toFixed(2),
       },
     ];
     const dv = new DataView();
@@ -45,7 +49,7 @@ export default class DonutChart extends Component {
         <Guide>
           <Html
             position={['50%', '50%']}
-            html='<div style="color:#8c8c8c;font-size:14px;text-align: center;width: 10em;">总收入(万元)<br><span style="color:#262626;font-size:24px">691.34</span></div>'
+            html={`<div style="color:#8c8c8c;font-size:14px;text-align: center;width: 10em;">总收入(元)<br><span style="color:#262626;font-size:24px">${allValue.toFixed(2)}</span></div>`}
             alignX="middle"
             alignY="middle"
           />

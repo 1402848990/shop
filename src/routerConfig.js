@@ -9,9 +9,15 @@ import Reserve from './pages/Reserve';
 import Asset from './pages/Asset';
 import OrderList from './pages/OrderList';
 import Goods from './pages/Goods';
+import WarnGoods from './pages/WarnGoods';
 import Membership from './pages/Membership';
 import AddReserve from './pages/AddReserve';
 import AddGoods from './pages/AddGoods';
+import AddMachine from './pages/AddMachine';
+import Category from './pages/CategoryManage';
+import Machine from './pages/MachineManage';
+import OrderManage from './pages/OrderManage';
+import Contact from './pages/Contact';
 
 const routerConfig = [
   {
@@ -29,6 +35,10 @@ const routerConfig = [
   {
     path: '/reserve',
     component: Reserve,
+  },
+  {
+    path: '/categoryManage',
+    component: Category,
   },
   {
     path: '/asset',
@@ -52,6 +62,34 @@ const routerConfig = [
   },
   {
     path: '/add/goods',
+    component: AddGoods,
+  },
+  {
+    path: '/warnGoods',
+    component: WarnGoods,
+  },
+  {
+    path: '/add/machine/:id',
+    component: AddMachine,
+  },
+  {
+    path: '/add/machine',
+    component: AddMachine,
+  },
+  {
+    path: '/machine',
+    component: Machine,
+  },
+  {
+    path: '/orderManage',
+    component: OrderManage,
+  },
+  {
+    path: '/Contact',
+    component: Contact,
+  },
+  {
+    path: '/edit/goods/:id',
     component: AddGoods,
   },
 ];

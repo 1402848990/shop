@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Grid } from '@alifd/next';
-import Footer from './components/Footer';
 import Intro from './components/Intro';
 import routerData from '../../routerConfig';
 
@@ -34,7 +33,6 @@ export default class UserLayout extends Component {
             </div>
           </Col>
         </Row>
-        <Footer />
       </div>
     );
   }
