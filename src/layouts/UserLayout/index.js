@@ -45,14 +45,15 @@ const styles = {
     minWidth: '1200px',
     height: '100vh',
     backgroundImage:
-      'url(https://img.alicdn.com/tfs/TB1OpAhC7zoK1RjSZFlXXai4VXa-1350-900.jpg)',
+      'url(src/images/backimg.jpeg)',
     backgroundSize: 'cover',
     display: 'flex',
     flexDirection: 'column',
   },
   row: {
     display: 'flex',
-    alignItems: 'center',
+    // alignItems: 'center',
+    marginTop: '160px',
     justifyContent: 'center',
     flex: '1',
   },

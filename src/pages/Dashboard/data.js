@@ -35,19 +35,19 @@ const MOCK_DATA = {
   ],
   data1: [
     {
-      title: '品项收入',
+      title: '今日订单数',
       value: '594,128',
     },
     {
-      title: '充值收入',
+      title: '当月订单数',
       value: '35,042',
     },
     {
-      title: '售卡收入',
+      title: '当年订单数',
       value: '3,904',
     },
     {
-      title: '耗卡金额',
+      title: '总订单数',
       value: '2,309',
     },
   ],

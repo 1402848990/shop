@@ -3,10 +3,31 @@ import { Link, withRouter } from 'react-router-dom';
 import { Nav } from '@alifd/next';
 import FoundationSymbol from '@icedesign/foundation-symbol';
 import { headerMenuConfig } from '../../../../menuConfig';
+import { getGoodsList } from '../../../../services';
 import './index.scss';
 
 @withRouter
 export default class Header extends Component {
+  state = {
+    goods: [],
+    expWarnNum: 0,
+    stockWarnNum: 0,
+  };
+
+  // 获取商品列表
+  fetchGoodsList = async (filter = {}) => {
+    const res = await getGoodsList(filter);
+    this.setState({
+      goods: res,
+      expWarnNum: res.filter(i => i.expiresWarn).length || 0,
+      stockWarnNum: res.filter(i => i.stockWarn).length || 0,
+    });
+  };
+
+  componentDidMount() {
+    this.fetchGoodsList();
+  }
+
   render() {
     const { location = {} } = this.props;
     const { pathname } = location;
@@ -33,7 +54,10 @@ export default class Header extends Component {
                           {nav.icon ? (
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
-                          <span>{nav.name}</span>
+                          <span>
+                            {nav.name}
+                            {nav.val ? `【${this.state[nav.val]}】` : ''}
+                          </span>
                         </span>
                       }
                     >
@@ -79,6 +103,14 @@ export default class Header extends Component {
                             <FoundationSymbol size="small" type={nav.icon} />
                           ) : null}
                           {nav.name}
+                          {nav.val ? (
+                            <span style={{ color: '#ffeb3b' }}>{`【${
+                            this.state[nav.val]
+                          }】`}
+                            </span>
+                        ) : (
+                          ''
+                        )}
                         </span>
                       </a>
                     </Nav.Item>
@@ -93,6 +125,14 @@ export default class Header extends Component {
                           <FoundationSymbol size="small" type={nav.icon} />
                         ) : null}
                         {nav.name}
+                        {nav.val ? (
+                          <span style={{ color: 'red' }}>{`【${
+                            this.state[nav.val]
+                          }】`}
+                          </span>
+                        ) : (
+                          ''
+                        )}
                       </span>
                     </Link>
                   </Nav.Item>

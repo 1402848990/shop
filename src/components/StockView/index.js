@@ -4,37 +4,49 @@ import { Statistic } from 'antd';
 import { getTimeStamp } from '../../utils';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { Grid, Icon, Balloon } from '@alifd/next';
-import Lines from './Lines';
+import San from './San';
 
 const { Row, Col } = Grid;
 
 export default class Overview extends Component {
   render() {
-    const { data: orderList = [] } = this.props || {};
-    const dayOrder = orderList.filter(
-      i => i.createdAt > getTimeStamp().yesterday.end
-    );
-    const monthVal = orderList.filter(
-      i => i.createdAt > getTimeStamp().month.start
-    );
-    const yearVal = orderList.filter(i => i.createdAt > 1640879999000);
-    const { title = '', col = 4 } = this.props;
+    const { data: goods = [] } = this.props || {};
+    const goodsList = goods.map((i) => {
+      let color = 'blue';
+      if (i.stock < 20) {
+        color = 'red';
+      } else if (i.stock < 100) {
+        color = '#2196f3';
+      } else if (i.stock < 200) {
+        color = 'blue';
+      }
+      return {
+        color,
+        ...i,
+        // nowStock: i.stock - i.salesNum || 0,
+      };
+    });
+
+    const total = goodsList.reduce((pre, curr) => +pre + +curr.stock, 0);
+    const okNum = goodsList.filter(i => !i.stockWarn).length;
+    const wranNum = goodsList.filter(i => i.stockWarn).length;
+
+    const { title = '', col = 3 } = this.props;
     const cols = [
       {
-        label: '今日订单数',
-        value: dayOrder.length || 0,
+        label: '当前库存总量',
+        value: total || 0,
+        color: 'blue',
       },
       {
-        label: '当月订单数',
-        value: monthVal.length || 0,
+        label: '当前安全库存商品种类',
+        value: okNum || 0,
+        color: 'green',
       },
       {
-        label: '年度订单数',
-        value: yearVal.length || 0,
-      },
-      {
-        label: '总订单数',
-        value: orderList.length || 0,
+        label: '库存预警商品种类',
+        value: wranNum || 0,
+        color: 'red',
       },
     ];
     return (
@@ -43,17 +55,12 @@ export default class Overview extends Component {
           {cols.map((item, index) => {
             const hasBorder = (index + 1) % col !== 0 ? styles.border : {};
             return (
-              <Col
-                l={24 / col}
-                key={index}
-                style={{ ...styles.item, ...hasBorder }}
-              >
+              <Col l={8} key={index} style={{ ...styles.item, ...hasBorder }}>
                 <div style={styles.value}>
                   <Statistic
                     title={<h2>{item.label}</h2>}
                     value={item.value}
-                    valueStyle={{ color: '#3f8600' }}
-                    prefix={<ArrowUpOutlined />}
+                    valueStyle={{ color: item.color }}
                   />
                 </div>
               </Col>
@@ -62,9 +69,9 @@ export default class Overview extends Component {
         </Row>
         <Row>
           <Col l="24">
-            <h3>当前月订单趋势</h3>
+            <h3>库存总览</h3>
             <br />
-            <Lines data={monthVal} />
+            <San data={goodsList} />
           </Col>
         </Row>
       </IceContainer>

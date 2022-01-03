@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@alifd/next';
 
-const PageHead = ({ title, style, ...props }) => {
+const PageHead = ({ title, style, disabled, ...props }) => {
   return (
     <div style={{ ...styles.container, ...style }}>
       <h3 style={styles.title}>{title}</h3>
       {props.buttonText ? (
-        <Button type="primary" onClick={props.onClick}>
+        <Button type="primary" disabled={disabled} onClick={props.onClick}>
           {props.buttonText}
         </Button>
       ) : null}

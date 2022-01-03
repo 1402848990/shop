@@ -43,7 +43,7 @@ class UserLogin extends Component {
       }
       console.log(values);
       Message.success('登录成功');
-      this.props.history.push('/');
+      this.props.history.push('/dashboard');
     });
   };
 
@@ -98,9 +98,6 @@ class UserLogin extends Component {
               >
                 登 录
               </Button>
-              <Link to="/user/register" style={styles.tips}>
-                立即注册
-              </Link>
             </div>
           </div>
         </IceFormBinderWrapper>

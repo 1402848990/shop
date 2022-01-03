@@ -288,6 +288,7 @@ export default withRouter((props) => {
         onClick={() => {
           setVisible(true);
         }}
+        disabled={!machineId}
       />
       {/* 上架商品弹窗 */}
       <Dialog
@@ -333,15 +334,17 @@ export default withRouter((props) => {
           scrollX={1450}
         />
       </IceContainer>
-      <IceContainer
-        style={{
-          padding: '40px',
-          textAlign: 'center',
-          lineHeight: '20px',
-        }}
-      >
-        <OrderManage machineId={machineId} />
-      </IceContainer>
+      {!!machineId && (
+        <IceContainer
+          style={{
+            padding: '40px',
+            textAlign: 'center',
+            lineHeight: '20px',
+          }}
+        >
+          <OrderManage machineId={machineId} />
+        </IceContainer>
+      )}
     </div>
   );
 });

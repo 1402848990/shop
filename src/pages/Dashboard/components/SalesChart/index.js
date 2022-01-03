@@ -3,47 +3,54 @@ import { Grid, Icon } from '@alifd/next';
 import ColumnChart from './ColumnChart';
 
 const { Row, Col } = Grid;
-const mockData = [
-  {
-    title: '年度销售数',
-    amount: '1,293',
-    percent: '15%',
-    increase: true,
-    color: '#fff',
-    borderColor: '#4FD4A4',
-    background: '#1BC98E',
-  },
-  {
-    title: '年度订单数',
-    amount: '758',
-    percent: '1.3%',
-    increase: false,
-    color: '#fff',
-    borderColor: '#EB6C7A',
-    background: '#E64758',
-  },
-  {
-    title: '年度会员数',
-    amount: '3,659',
-    percent: '20%',
-    increase: true,
-    color: '#fff',
-    borderColor: '#B29FFF',
-    background: '#9F85FF',
-  },
-  {
-    title: '年度总收入',
-    amount: '298,234',
-    percent: '12%',
-    increase: false,
-    color: '#fff',
-    borderColor: '#E9E063',
-    background: '#E5D936',
-  },
-];
 
 export default class SalesChart extends Component {
   render() {
+    const { orderList, billList, goodsList } = this.props;
+
+    const totalGoodsNum = orderList.reduce((pre, curr) => +pre + +curr.goodsNum, 0);
+    const account = billList.reduce((pre, curr) => +pre + +curr.amount, 0);
+
+    const goodsNum = goodsList.reduce((pre, curr) => +pre + +curr.stock, 0);
+
+    const mockData = [
+      {
+        title: '年度销售数',
+        amount: totalGoodsNum,
+        percent: '件',
+        increase: true,
+        color: '#fff',
+        borderColor: '#4FD4A4',
+        background: '#1BC98E',
+      },
+      {
+        title: '年度订单数',
+        amount: orderList.length,
+        percent: '个',
+        increase: false,
+        color: '#fff',
+        borderColor: '#EB6C7A',
+        background: '#E64758',
+      },
+      {
+        title: '系统商品数',
+        amount: goodsNum,
+        percent: '件',
+        increase: true,
+        color: '#fff',
+        borderColor: '#B29FFF',
+        background: '#9F85FF',
+      },
+      {
+        title: '年度总收入',
+        amount: account,
+        percent: '元',
+        increase: false,
+        color: '#fff',
+        borderColor: '#E9E063',
+        background: '#E5D936',
+      },
+    ];
     return (
       <Row wrap gutter={20} style={{ marginBottom: '20px' }}>
         {mockData.map((item, index) => {

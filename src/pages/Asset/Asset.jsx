@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Overview from '../../components/Overview';
+import AssestView from '../../components/AssestView';
 import PageHead from '../../components/PageHead';
 import AssetTab from './components/AssetTab';
 import { getAssestList } from '../../services';
@@ -35,7 +35,7 @@ export default function Index() {
   return (
     <div>
       <PageHead title="资产管理" />
-      <Overview data={totalData} col="3" />
+      <AssestView data={totalData} col="3" />
       <AssetTab billList={billList} />
     </div>
   );

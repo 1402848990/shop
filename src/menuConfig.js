@@ -4,18 +4,20 @@
 
 const headerMenuConfig = [
   {
-    name: '反馈',
-    path: 'https://github.com/alibaba/ice',
+    name: '库存预警商品',
+    path: 'http://localhost:4444/#/warnGoods',
     external: true,
     newWindow: true,
-    icon: 'message',
+    icon: 'notice',
+    val: 'stockWarnNum',
   },
   {
-    name: '帮助',
-    path: 'https://alibaba.github.io/ice',
+    name: '临期预警商品',
+    path: 'http://localhost:4444/#/warnGoods/',
     external: true,
     newWindow: true,
-    icon: 'bangzhu',
+    icon: 'exchange',
+    val: 'expWarnNum',
   },
   {
     name: '退出',

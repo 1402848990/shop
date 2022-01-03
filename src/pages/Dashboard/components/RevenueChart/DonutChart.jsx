@@ -9,8 +9,6 @@ export default class DonutChart extends Component {
     const { DataView } = DataSet;
     const { Html } = Guide;
 
-    console.log(((zfbValue / allValue) * 100));
-
     // MOCK 数据，实际业务按需进行替换
     const data = [
       {

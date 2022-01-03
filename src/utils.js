@@ -66,9 +66,7 @@ export function getTimeStamp() {
   res.yesterday.end =
     new Date(
       `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`
-    ).getTime() /
-      1000 -
-    1;
+    ).getTime();
 
   res.lastMonth.end =
     new Date(
