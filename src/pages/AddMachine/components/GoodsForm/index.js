@@ -5,6 +5,7 @@ import IceContainer from '@icedesign/container';
 import { Message, Dialog, Button } from '@alifd/next';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
+import { Col, Progress, Row } from 'antd';
 import {
   addMachine,
   getMachineDetail,
@@ -12,12 +13,14 @@ import {
   getContactList,
   getGoodsList,
   updateGood,
+  getOrderList,
 } from '../../../../services';
 import { PROVICEOPT, PROVINCE } from '../../../../utils';
 import PageHead from '../../../../components/PageHead';
 import BaseForm from '../../../../common/BaseForm';
 import BaseTable from '../../../../common/BaseTable';
 import OrderManage from '../../../OrderManage';
+import OverView from '../Overview/index';
 
 export default withRouter((props) => {
   // 编辑时从url获取机器/门店id
@@ -27,11 +30,12 @@ export default withRouter((props) => {
 
   const [contactList, setcontactList] = useState([]);
   const [goodList, setGoodList] = useState([]);
+  const [machineDetail, setmachineDetail] = useState({});
+  const [orderList, setOrderList] = useState([]);
   const [beLongGoodList, setBeLongGoodList] = useState([]);
   const [visible, setVisible] = useState(false);
   const [selectedGoodIds, setSelectedGoodIds] = useState('');
   const [nowSelected, setNowSelected] = useState('');
-  // const [machineDetail, setMachineDetail] = useState({});
 
   // 获取负责人列表
   async function fetchcontactList() {
@@ -53,12 +57,24 @@ export default withRouter((props) => {
     }
   }
 
+  // 获取订单列表
+  const fetchOrderList = async (filter = {}) => {
+    if (machineId) {
+      filter.filter ? null : (filter.filter = {});
+      filter.filter.machineId = machineId;
+    }
+    const res = await getOrderList(filter);
+
+    setOrderList(res);
+  };
+
   // 获取机器/门店详情
   async function fetchMachineDetail() {
     console.log('machineId', machineId);
     console.log('formRef', formRef);
     if (machineId) {
       const res = await getMachineDetail(machineId);
+      setmachineDetail(res);
       res.target /= 10000;
       console.log('res', res);
       formRef?.current?.setFieldsValue(res);
@@ -70,6 +86,7 @@ export default withRouter((props) => {
   }
 
   useEffect(() => {
+    fetchOrderList();
     fetchcontactList();
     fetchMachineDetail();
     fetchGoodList();
@@ -279,6 +296,12 @@ export default withRouter((props) => {
   };
 
   console.log('selectedGoodIds', selectedGoodIds);
+  console.log('=====orderList', orderList);
+
+  // 订单总计金额
+  const total = orderList.reduce((pre, curr) => +pre + +curr.amount, 0);
+
+  console.log('total', total, machineDetail);
 
   return (
     <div>
@@ -305,20 +328,47 @@ export default withRouter((props) => {
         />
       </Dialog>
       <IceContainer style={{ padding: '40px' }}>
-        <BaseForm
-          ref={formRef}
-          onSubmit={onSubmit}
-          others={{
-            labelCol: { span: 3 },
-            wrapperCol: { span: 8 },
-            initialValues: {
-              target: 5,
-              status: true,
-            },
-          }}
-          columns={columns}
-        />
+        <Row>
+          <Col span="14">
+            <BaseForm
+              ref={formRef}
+              onSubmit={onSubmit}
+              others={{
+                labelCol: { span: 3 },
+                wrapperCol: { span: 8 },
+                initialValues: {
+                  target: 5,
+                  status: true,
+                },
+              }}
+              columns={columns}
+            />
+          </Col>
+          {machineId && (
+            <Col span="8">
+              {' '}
+              <Progress
+                width={200}
+                type="circle"
+                strokeColor={{
+                  '0%': '#108ee9',
+                  '100%': '#87d068',
+                }}
+                percent={(
+                  (total * 100) /
+                  (machineDetail.target * 10000)
+                ).toFixed(2)}
+              />{' '}
+            </Col>
+          )}
+        </Row>
       </IceContainer>
+      {machineId && (
+        <IceContainer style={{ padding: '40px' }}>
+          <OverView orderList={orderList} />
+        </IceContainer>
+      )}
+
       <IceContainer
         title="已上架商品"
         style={{

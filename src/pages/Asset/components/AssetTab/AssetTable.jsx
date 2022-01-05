@@ -7,6 +7,8 @@ const Index = (props) => {
   const zfbImg = require('../../../../images/zfb.svg');
   const wxImg = require('../../../../images/wx.svg');
 
+  console.log('billList', billList);
+
   return (
     <div
       id="scrollableDiv"

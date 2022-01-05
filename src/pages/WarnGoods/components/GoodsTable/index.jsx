@@ -123,7 +123,7 @@ class Tables extends React.Component {
         // loading={initLoading}
         itemLayout="horizontal"
         pagination={{
-          pageSize: 10,
+          pageSize: 18,
         }}
         dataSource={list}
 
