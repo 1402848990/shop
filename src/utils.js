@@ -3,6 +3,7 @@ import React from 'react';
 import { Select } from 'antd';
 
 /* eslint-disable import/prefer-default-export */
+// 各个省份的代码和名称枚举值
 export const PROVINCE = {
   110000: '北京',
   120000: '天津',
@@ -41,6 +42,7 @@ export const PROVINCE = {
   990000: '海外',
 };
 
+// 生成省份的选项
 export const PROVICEOPT = () => {
   const res = [];
   for (const [value, label] of Object.entries(PROVINCE)) {
@@ -49,6 +51,7 @@ export const PROVICEOPT = () => {
   return res;
 };
 
+// 获取本月初、本周、本日时间戳
 export function getTimeStamp() {
   const res = {
     yesterday: {},
@@ -63,15 +66,12 @@ export function getTimeStamp() {
     ).getTime() /
       1000 -
     24 * 3600;
-  res.yesterday.end =
-    new Date(
-      `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`
-    ).getTime();
+  res.yesterday.end = new Date(
+    `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`
+  ).getTime();
 
   res.lastMonth.end =
-    new Date(
-      `${now.getFullYear()}/${now.getMonth() + 1}/${1}`
-    ).getTime() /
+    new Date(`${now.getFullYear()}/${now.getMonth() + 1}/${1}`).getTime() /
       1000 -
     1;
   const lastMonthD = new Date(res.lastMonth.end * 1000);
@@ -80,11 +80,42 @@ export function getTimeStamp() {
       `${lastMonthD.getFullYear()}/${lastMonthD.getMonth() + 1}/${1}`
     ).getTime() / 1000;
 
-  res.month.start =
-    new Date(
-      `${now.getFullYear()}/${now.getMonth() + 1}/${1}`
-    ).getTime();
+  res.month.start = new Date(
+    `${now.getFullYear()}/${now.getMonth() + 1}/${1}`
+  ).getTime();
   res.month.end = res.yesterday.end;
 
   return res;
+}
+
+
+// 获取前n天的日期，返回string格式
+export function getDayString(day) {
+  const today = new Date();
+
+  const targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day;
+
+  today.setTime(targetday_milliseconds);
+
+  const tYear = today.getFullYear();
+
+  let tMonth = today.getMonth();
+
+  let tDate = today.getDate();
+
+  tMonth = doHandleMonth(tMonth + 1);
+
+  tDate = doHandleMonth(tDate);
+
+  return `${tYear}-${tMonth}-${tDate}`;
+}
+
+function doHandleMonth(month) {
+  let m = month;
+
+  if (month.toString().length == 1) {
+    m = `0${month}`;
+  }
+
+  return m;
 }

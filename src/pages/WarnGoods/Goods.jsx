@@ -1,3 +1,5 @@
+// 预警页面
+
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import GoodsTable from './components/GoodsTable';

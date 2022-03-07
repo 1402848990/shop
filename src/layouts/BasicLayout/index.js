@@ -14,15 +14,15 @@ export default class BasicLayout extends Component {
         style={{ minHeight: '100vh' }}
         className="ice-design-layout"
       >
-        <Layout.Aside width={240}>
+        {/* <Layout.Aside width={240}>
           <Aside />
-        </Layout.Aside>
+        </Layout.Aside> */}
 
         <Layout.Section>
           <Layout.Main scrollable>
-            <Layout.Header>
+            {/* <Layout.Header>
               <Header />
-            </Layout.Header>
+            </Layout.Header> */}
             <div className="main-container">
               <MainRoutes />
             </div>

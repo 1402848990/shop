@@ -1,3 +1,5 @@
+// 新增、编辑商品页面
+
 /* eslint-disable no-unused-expressions */
 /* eslint react/no-string-refs:0 */
 import React, { useState, useEffect, useRef } from 'react';
@@ -120,6 +122,7 @@ export default withRouter((props) => {
     <div>
       <PageHead title="添加商品" />
       <IceContainer style={{ padding: '40px' }}>
+        {/* 商品表单 */}
         <BaseForm
           ref={formRef}
           onSubmit={onSubmit}

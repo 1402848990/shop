@@ -1,3 +1,5 @@
+// 新增、编辑机器页面
+
 /* eslint-disable no-unused-expressions */
 /* eslint react/no-string-refs:0 */
 import React, { useState, useEffect, useRef } from 'react';
@@ -344,6 +346,7 @@ export default withRouter((props) => {
               columns={columns}
             />
           </Col>
+          {/* 是否是新增，新增时不显示目标完成度 */}
           {machineId && (
             <Col span="8">
               {' '}
@@ -363,6 +366,7 @@ export default withRouter((props) => {
           )}
         </Row>
       </IceContainer>
+      {/* 是否是新增，新增时不显示历史订单 */}
       {machineId && (
         <IceContainer style={{ padding: '40px' }}>
           <OverView orderList={orderList} />
@@ -384,6 +388,7 @@ export default withRouter((props) => {
           scrollX={1450}
         />
       </IceContainer>
+      {/* 是否是新增，新增时不显示历史订单 */}
       {!!machineId && (
         <IceContainer
           style={{

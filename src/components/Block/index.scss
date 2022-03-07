@@ -1,0 +1,29 @@
+.block{
+  border-radius: 8px;
+  float: left;
+  text-align: center;
+  width: 222px;
+  height: 160px;
+  background: #fffaf7;
+  margin: 0 12px 12px 0;
+  padding: 20px;
+  font-weight: 500;
+  .add{
+    font-weight: 500;
+    font-size: 22px;
+    color: #7c7c7c;
+    .addNum{
+      color: #e57631;
+    }
+  }
+  .number{
+    font-size: 42px;
+    color: #e57631;
+    font-weight: 600;
+  }
+  .text{
+    line-height: 26px;
+    font-size: 22px;
+    color: #222;
+  }
+}

@@ -5,19 +5,6 @@ import { Grid, Icon, Balloon } from '@alifd/next';
 const { Row, Col } = Grid;
 
 export default class Overview extends Component {
-  renderHelp = () => {
-    return (
-      <Balloon
-        trigger={<Icon type="help" size="xs" />}
-        align="t"
-        alignEdge
-        closable={false}
-      >
-        当前方式全部入账金额
-      </Balloon>
-    );
-  };
-
   render() {
     const { data = [], title = '', col = 4 } = this.props;
     return (
@@ -31,10 +18,10 @@ export default class Overview extends Component {
                 key={index}
                 style={{ ...styles.item, ...hasBorder }}
               >
-                <div style={styles.title}>
-                  {item.title} {this.renderHelp()}
+                <div style={styles.title}>{item.title}</div>
+                <div style={styles.value}>
+                  <span style={{ color: item.color }}>{item.value}</span>
                 </div>
-                <div style={styles.value}>{item.value}</div>
               </Col>
             );
           })}
@@ -56,11 +43,12 @@ const styles = {
     borderRight: '1px solid #F0F0F0',
   },
   title: {
-    fontSize: '12px',
+    fontSize: '18px',
+    fontWeight: 600,
     marginBottom: '10px',
   },
   value: {
-    fontSize: '22px',
-    color: '#333',
+    fontSize: '24px',
+    fontWeight: 600,
   },
 };

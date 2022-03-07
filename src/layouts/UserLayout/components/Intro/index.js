@@ -4,8 +4,8 @@ const LoginIntro = () => {
   return (
     <div style={styles.container}>
       <div style={styles.content}>
-        <div style={styles.title}>无人售卖管理与智慧监控系统</div>
-        <p style={styles.description}>多数据可视化展示的无人售卖管理与智慧监控系统</p>
+        <div style={styles.title}>全国疫情可视化数据系统</div>
+        <p style={styles.description}>多数据可视化展示的全国疫情可视化数据系统</p>
         <p style={styles.description}>一起解构数字世界，碰撞科技创新思想</p>
       </div>
     </div>

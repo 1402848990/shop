@@ -1,3 +1,5 @@
+// 商品列表页面
+
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import Table from './components/Table';

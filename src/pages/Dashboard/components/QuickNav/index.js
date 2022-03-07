@@ -7,37 +7,37 @@ const { Row, Col } = Grid;
 
 const MOCK_DATA = [
   {
-    title: '资产管理',
+    title: '易感人群：人群普遍易感老年人及有基础疾病者感染后病情较重儿童及婴幼儿也有发病',
     icon: 'cart',
     color: '#5e83fb',
     to: '/asset',
   },
   {
-    title: '商品管理',
+    title: '潜伏期：一般为 3～7 天，最长不超过 14 天',
     icon: 'cart',
     color: '#f7da47',
     to: '/goods',
   },
   {
-    title: '类目管理',
+    title: '宿主：野生动物，可能为中华菊头蝠',
     icon: 'cart',
     color: '#ee706d',
     to: '/categoryManage',
   },
   {
-    title: '订单管理',
+    title: '病毒：SARS-CoV-2，其导致疾病命名 COVID-19',
     icon: 'cart',
     color: '#58ca9a',
     to: '/orderManage',
   },
   {
-    title: '机器/门店管理',
+    title: '传染源：新冠肺炎的患者。无症状感染者也可能成为传染源',
     icon: 'machine',
     color: '#58ca9a',
     to: '/machine',
   },
   {
-    title: '预警商品',
+    title: '传播：经呼吸道飞沫接触传播是主要的传播途径气溶胶传播和消化道等传播途径尚待明确',
     icon: 'cart',
     color: '#d93737',
     to: '/warnGoods',
@@ -47,7 +47,7 @@ const MOCK_DATA = [
 export default class QuickNav extends Component {
   render() {
     return (
-      <IceContainer title="便捷导航">
+      <IceContainer title="科普BLOCK">
         <Row wrap gutter="20" style={{ marginBottom: '20px' }}>
           {MOCK_DATA.map((item, index) => {
             return (
