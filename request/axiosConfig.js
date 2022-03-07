@@ -35,7 +35,7 @@ service.interceptors.response.use(
       const { status } = error.response;
       // 如果401或405则到登录页
       if (status === 401 || status === 405) {
-        window.location.href = '/login';
+        window.location.href = '/dashboard';
       }
     }
     return Promise.reject(error);

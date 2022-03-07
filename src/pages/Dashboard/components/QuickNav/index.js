@@ -7,7 +7,7 @@ const { Row, Col } = Grid;
 
 const MOCK_DATA = [
   {
-    title: '易感人群：人群普遍易感老年人及有基础疾病者感染后病情较重儿童及婴幼儿也有发病',
+    title: '易感人群：易感老年人及有基础疾病者感染后病情较重',
     icon: 'cart',
     color: '#5e83fb',
     to: '/asset',

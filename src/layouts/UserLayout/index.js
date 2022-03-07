@@ -28,7 +28,7 @@ export default class UserLayout extends Component {
                   ) : null;
                 })}
 
-                <Redirect exact from="/user" to="/user/login" />
+                <Redirect exact from="/user" to="/dashboard" />
               </Switch>
             </div>
           </Col>

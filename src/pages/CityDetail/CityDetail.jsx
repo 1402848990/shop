@@ -1,7 +1,7 @@
-// 我的账户页面
+// 城市疫情
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import AssestView from '../../components/AssestView';
+import BaseCol from '../../components/BaseCol';
 import PageHead from '../../components/PageHead';
 import AssetTab from './components/AssetTab';
 import IceContainer from '@icedesign/container';
@@ -60,7 +60,7 @@ export default withRouter((props) => {
   return (
     <div>
       <PageHead title={<span style={{ color: 'white', fontSize: '22px' }}>{cityDetail.xArea}疫情主页</span>} />
-      <AssestView data={totalData} col="3" />
+      <BaseCol data={totalData} col="3" />
       {/* <IceContainer title="趋势图">
         <DateLines data={sevenData} />
       </IceContainer> */}

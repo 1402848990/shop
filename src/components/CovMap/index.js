@@ -4,8 +4,6 @@ import IceContainer from '@icedesign/container';
 import { Statistic } from 'antd';
 import { groupBy, maxBy } from 'lodash';
 import moment from 'moment';
-import { getTimeStamp } from '../../utils';
-import { ArrowUpOutlined, CheckCircleTwoTone, SyncOutlined, HolderOutlined, PauseCircleOutlined, CompassOutlined } from '@ant-design/icons';
 import { Grid, Icon, Balloon } from '@alifd/next';
 import Lines from './Lines';
 
