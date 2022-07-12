@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Cookie from 'js-cookie';
 import IceContainer from '@icedesign/container';
 import { Table } from 'antd';
 import { Grid } from '@alifd/next';
@@ -17,7 +18,7 @@ export default class Overview extends Component {
       {
         title: '地区',
         dataIndex: 'xArea',
-        render: (text, record) => <Link target="_blank" to={`/cityDetail/${JSON.stringify(record)}`} className="tableValue">{text} </Link>,
+        render: (text, record) => <Link onClick={() => { Cookie.set('cityObj', JSON.stringify(record)); localStorage.setItem('cityObj', JSON.stringify(record)); }} target="_blank" to={`/cityDetail/${JSON.stringify(record)}`} className="tableValue">{text} </Link>,
       },
       {
         title: '现有确诊',
