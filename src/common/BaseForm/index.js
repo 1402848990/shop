@@ -1,3 +1,5 @@
+// 基础表单
+
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable no-nested-ternary */
 import React, { forwardRef } from 'react';
@@ -22,7 +24,7 @@ export default forwardRef((props, ref) => {
           );
         case 'inputNumber':
           return (
-            <InputNumber addonBefore="12" style={{ width: '100%' }} />
+            <InputNumber {...item.others} style={{ width: '100%' }} />
           );
         case 'switch':
           return <Switch style={{ width: '100px' }} />;

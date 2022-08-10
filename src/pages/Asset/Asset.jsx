@@ -1,3 +1,4 @@
+// 我的账户页面
 import React, { useState, useEffect } from 'react';
 import AssestView from '../../components/AssestView';
 import PageHead from '../../components/PageHead';
@@ -40,3 +41,4 @@ export default function Index() {
     </div>
   );
 }
+

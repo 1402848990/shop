@@ -28,7 +28,7 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
-    name: '工作台',
+    name: '大数据分析',
     path: '/dashboard',
     icon: 'home2',
   },
@@ -77,26 +77,6 @@ const asideMenuConfig = [
     path: '/contact',
     icon: 'fans',
   },
-  // {
-  //   name: '预约管理',
-  //   path: '/reserve',
-  //   icon: 'clock',
-  // },
-  // {
-  //   name: '添加预约',
-  //   path: '/add/reserve',
-  //   icon: 'edit2',
-  // },
-  // {
-  //   name: '订单管理',
-  //   path: '/order',
-  //   icon: 'shopcar',
-  // },
-  // {
-  //   name: '会员管理',
-  //   path: '/membership',
-  //   icon: 'menu',
-  // },
 ];
 
 export { headerMenuConfig, asideMenuConfig };

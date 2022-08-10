@@ -3,6 +3,7 @@ import React from 'react';
 import { Select } from 'antd';
 
 /* eslint-disable import/prefer-default-export */
+// 各个省份的代码和名称枚举值
 export const PROVINCE = {
   110000: '北京',
   120000: '天津',
@@ -41,6 +42,7 @@ export const PROVINCE = {
   990000: '海外',
 };
 
+// 生成省份的选项
 export const PROVICEOPT = () => {
   const res = [];
   for (const [value, label] of Object.entries(PROVINCE)) {
@@ -49,6 +51,8 @@ export const PROVICEOPT = () => {
   return res;
 };
 
+
+// 获取本月初、本周、本日时间戳
 export function getTimeStamp() {
   const res = {
     yesterday: {},

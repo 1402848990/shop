@@ -9,7 +9,7 @@ switch (process.env.NODE_ENV) {
     baseUrl = '';
     break;
   default:
-    baseUrl = 'http://localhost:8088/interface';
+    baseUrl = 'http://localhost:8089/interface';
     break;
 }
 
