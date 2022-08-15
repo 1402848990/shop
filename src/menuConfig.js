@@ -28,6 +28,16 @@ const headerMenuConfig = [
 
 const asideMenuConfig = [
   {
+    name: '藏品平台管理',
+    path: '/platformManage',
+    icon: 'ul-list',
+  },
+  {
+    name: '藏品名称管理',
+    path: '/categoryManage',
+    icon: 'ul-list',
+  },
+  {
     name: '大数据分析',
     path: '/dashboard',
     icon: 'home2',
@@ -52,11 +62,7 @@ const asideMenuConfig = [
     path: '/add/goods',
     icon: 'publish',
   },
-  {
-    name: '类目管理',
-    path: '/categoryManage',
-    icon: 'ul-list',
-  },
+
   {
     name: '订单管理',
     path: '/orderManage',

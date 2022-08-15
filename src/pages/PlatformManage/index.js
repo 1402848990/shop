@@ -2,15 +2,14 @@
 /* eslint-disable no-unused-expressions */
 import React, { useRef, useState, useEffect } from 'react';
 import { Button, Dialog } from '@alifd/next';
-import { Form, Input, message, InputNumber, Select } from 'antd';
+import { Form, Input, message, InputNumber } from 'antd';
 import {
-  deleteCategoryApi,
-  getCategoryListApi,
-  addCategoryApi,
-  editCategoryApi,
+  deletePlatformApi,
   getPlatformListApi,
+  addPlatformApi,
+  editPlatformApi,
 } from 'services';
-
+import Upload from 'common/Upload';
 import Table from './components/Table';
 import PageHead from '../../components/PageHead';
 
@@ -18,28 +17,28 @@ export default function Category(props) {
   const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [platformList, setPlatformList] = useState([]);
   const [currData, setCurrData] = useState({});
+  const [fileList, setFileList] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const formRef = useRef();
 
-  // 获取所有平台方法
-  const fetchPlatformData = async () => {
-    const res = await getPlatformListApi({ pageSize: 999, pageNum: 1 });
-    setPlatformList(res.rows);
+  console.log('fileList', fileList);
+
+  const onFileChange = (_fileList) => {
+    console.log(8888, '_fileList', _fileList);
+    setFileList(_fileList);
   };
 
-  // 获取所有名称方法
-  const fetchData = async (value) => {
+  // 获取所有平台方法
+  const fetchData = async () => {
     setIsLoading(true);
-    const res = await getCategoryListApi({ pageSize: 999, pageNum: 1, ...value });
+    const res = await getPlatformListApi({ pageSize: 999, pageNum: 1 });
     setIsLoading(false);
     setData(res.rows);
   };
 
   useEffect(() => {
     fetchData();
-    fetchPlatformData();
   }, []);
 
   const handleClick = () => {
@@ -52,7 +51,7 @@ export default function Category(props) {
       title: '提示',
       content: '确认删除吗',
       onOk: async () => {
-        await deleteCategoryApi({ id });
+        await deletePlatformApi({ id });
         fetchData();
       },
     });
@@ -62,11 +61,15 @@ export default function Category(props) {
   const handleOk = () => {
     formRef?.current?.validateFields().then(async (val) => {
       console.log('val', val);
-
-      const api = isEdit ? editCategoryApi : addCategoryApi;
+      if (!fileList[0].response) {
+        message.error('平台LOGO不能为空');
+        return;
+      }
+      val.logo = fileList[0].response;
+      const api = isEdit ? editPlatformApi : addPlatformApi;
       isEdit ? (val.id = currData.id) : null;
       const res = await api(val);
-      message.success(isEdit ? '修改成功' : '新增名称成功');
+      message.success(isEdit ? '修改成功' : '新增平台成功');
       console.log('res', res);
 
       onClose();
@@ -77,7 +80,7 @@ export default function Category(props) {
   // 弹窗关闭
   const onClose = () => {
     setVisible(false);
-
+    setFileList([]);
     setIsEdit(false);
     setCurrData({});
   };
@@ -85,68 +88,70 @@ export default function Category(props) {
   // 编辑方法
   const handleEdit = (item) => {
     console.log('item', item, formRef?.current);
-    const { name, id, platformId } = item;
-
+    const { name, sortWeight, logo, id } = item;
+    setFileList([{ response: logo, thumbUrl: logo }]);
     setIsEdit(true);
-    setCurrData({ name, platformId, id });
+    setCurrData({ name, sortWeight, id, logo });
     setVisible(true);
   };
 
   console.log('currData', currData);
 
-  const handleFilterChange = (value) => {
-    fetchData(value);
-  };
-
   return (
     <div>
       <PageHead
-        title="藏品名称管理"
-        buttonText="新增藏品名称"
+        title="藏品平台管理"
+        buttonText="新增藏品平台"
         onClick={handleClick}
       />
 
       {/* 新增弹窗 */}
       <Dialog
-        title="新增藏品名称"
+        title="新增藏品平台"
         visible={visible}
         onOk={handleOk}
         onCancel={onClose}
         onClose={onClose}
-        style={{ width: '500px' }}
+        style={{ width: '800px' }}
       >
         <Form
           value={currData}
           ref={formRef}
           name="basic"
-          labelCol={{ span: 6 }}
+          labelCol={{ span: 4 }}
           wrapperCol={{ span: 16 }}
           initialValues={currData}
         >
           <Form.Item
-            label="名称"
+            label="平台名称"
             name="name"
-            rules={[{ required: true, message: '请输入藏品名称' }]}
+            rules={[{ required: true, message: '请输入平台名!' }]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label="选择所属平台" name="platformId" rules={[{ required: true, message: '请选择所属平台' }]}>
-            <Select>
-              {platformList.map(i => (
-                <Select.Option value={i.id} key={i.id}>{i.name}</Select.Option>
-              ))}
-            </Select>
+          <Form.Item label="平台权重" name="sortWeight">
+            <InputNumber style={{ width: '100%' }} min={1} max={99999} />
+          </Form.Item>
+          <Form.Item
+            label="平台LOGO"
+            name="logo"
+            rules={[{ required: true, message: '请上传平台logo' }]}
+          >
+            <Upload
+              onChange={onFileChange}
+              maxCount={1}
+              fileList={fileList}
+              multiple={false}
+            />
           </Form.Item>
         </Form>
       </Dialog>
       {/* 类目展示表格 */}
       <Table
-        platformList={platformList}
         data={data}
         handleDelete={handleDelete}
         handleEdit={handleEdit}
         isLoading={isLoading}
-        handleFilterChange={handleFilterChange}
       />
     </div>
   );

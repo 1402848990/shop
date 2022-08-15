@@ -17,7 +17,17 @@ export default class BasicLayout extends Component {
 
     return (
       <div className="aside-custom-menu">
-        <p style={{ color: '#3080fe', fontSize: '22px', textAlign: 'center', lineHeight: '62px', letterSpacing: '4px' }}>智慧监控分析系统</p>
+        <p
+          style={{
+            color: '#3080fe',
+            fontSize: '22px',
+            textAlign: 'center',
+            lineHeight: '62px',
+            letterSpacing: '4px',
+          }}
+        >
+          【闲宇宙】运营管理
+        </p>
         <div className="user-info">
           {/* <IceImg
             height={40}

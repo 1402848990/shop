@@ -5,6 +5,147 @@
 /* eslint-disable import/prefer-default-export */
 import axios from '../request/axiosConfig';
 
+
+/**
+ * @description 登录
+ */
+export const loginApi = async (data) => {
+  const res = await axios({
+    url: '/v2/AdminLogin/login',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+
+/**
+ * @description 新增藏品平台
+ */
+export const addPlatformApi = async (data) => {
+  const res = await axios({
+    url: '/v1/PlatformAdmin/addPlatform',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * @description 获取藏品平台列表
+ */
+export const getPlatformListApi = async (data) => {
+  const res = await axios({
+    url: '/v1/PlatformAdmin/getPlatformList',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+
+/**
+ * @description 编辑藏品平台
+ */
+export const editPlatformApi = async (data) => {
+  const res = await axios({
+    url: '/v1/PlatformAdmin/editPlatformInfo',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * @description 删除藏品平台
+ */
+export const deletePlatformApi = async (data) => {
+  const res = await axios({
+    url: '/v1/PlatformAdmin/deletePlatform',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * @description 查询指定藏品平台
+ */
+export const getPlatformInfoByIdApi = async (data) => {
+  const res = await axios({
+    url: '/v1/PlatformAdmin/getPlatformInfoById',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+
+/**
+ * @description 新增藏品名称
+ */
+export const addCategoryApi = async (data) => {
+  const res = await axios({
+    url: '/v1/ClassificationAdmin/addClassification',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * @description 获取藏品名称列表
+ */
+export const getCategoryListApi = async (data) => {
+  const res = await axios({
+    url: '/v1/ClassificationAdmin/getClassificationList',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+
+/**
+ * @description 编辑藏品名称
+ */
+export const editCategoryApi = async (data) => {
+  const res = await axios({
+    url: '/v1/ClassificationAdmin/editClassification',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+/**
+ * @description 删除藏品名称
+ */
+export const deleteCategoryApi = async (data) => {
+  const res = await axios({
+    url: '/v1/ClassificationAdmin/deleteClassification',
+    method: 'post',
+    data,
+  });
+  return res.data;
+};
+
+
+/**
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
 /**
  * @description 类目相关
  */
@@ -196,3 +337,4 @@ export const getAssestList = async (data) => {
   });
   return res.data;
 };
+

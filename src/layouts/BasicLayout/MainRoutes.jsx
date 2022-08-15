@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import Cookie from 'js-cookie';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '../../components/NotFound';
 import routerData from '../../routerConfig';
+
 
 class MainRoutes extends Component {
   /**
@@ -19,6 +21,10 @@ class MainRoutes extends Component {
   };
 
   render() {
+    const token = Cookie.get('token');
+    if (!token) {
+      window.location.href = '/#/user/login';
+    }
     return (
       <Switch>
         {/* 渲染路由表 */}

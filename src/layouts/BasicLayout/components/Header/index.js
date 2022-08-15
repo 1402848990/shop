@@ -25,7 +25,7 @@ export default class Header extends Component {
   };
 
   componentDidMount() {
-    this.fetchGoodsList();
+    // this.fetchGoodsList();
   }
 
   render() {

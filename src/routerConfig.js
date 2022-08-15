@@ -5,7 +5,8 @@ import Goods from './pages/Goods';
 import WarnGoods from './pages/WarnGoods';
 import AddGoods from './pages/AddGoods';
 import AddMachine from './pages/AddMachine';
-import Category from './pages/CategoryManage';
+import PlatformManage from './pages/PlatformManage';
+import categoryManage from './pages/CategoryManage';
 import Machine from './pages/MachineManage';
 import OrderManage from './pages/OrderManage';
 import Contact from './pages/Contact';
@@ -21,8 +22,12 @@ const routerConfig = [
     component: Dashboard,
   },
   {
+    path: '/platformManage',
+    component: PlatformManage,
+  },
+  {
     path: '/categoryManage',
-    component: Category,
+    component: categoryManage,
   },
   {
     path: '/asset',

@@ -7,7 +7,6 @@ import Cookie from 'js-cookie';
 import axios from 'axios';
 import baseUrl from './baseUrl';
 
-
 const service = axios.create({
   baseURL: baseUrl,
   timeout: 600000,
@@ -17,25 +16,34 @@ const service = axios.create({
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    // console.log('response', response);
+    console.log('response', response);
     // 获取更新的token
-    // const { token } = response.data;
-    // 如果token存在则存在localStorage
-    // token && localStorage.setItem('token', token);
-    const { data } = response;
-    if (!data.success) {
-      message.error(data.message);
-      return Promise.reject(data.message);
+
+    const { data, data: { code, success, msg, data: resData } = {} } = response;
+    const token = data?.data?.token;
+
+    if (code === 401) {
+      window.location.href = '/#/user/login';
     }
-    return data;
+    // 如果token存在则存在cookie中
+    if (token) {
+      console.log('token', token);
+      Cookie.set('token', token, { expires: 1 });
+    }
+
+    if (!success) {
+      message.error(msg);
+      return Promise.reject(msg);
+    }
+    return data || success;
   },
   (error) => {
     if (error.response) {
       console.log('error', error);
       const { status } = error.response;
       // 如果401或405则到登录页
-      if (status === 401 || status === 405) {
-        window.location.href = '/login';
+      if (status === 401) {
+        window.location.href = '/#/user/login';
       }
     }
     return Promise.reject(error);
@@ -47,12 +55,14 @@ service.interceptors.request.use(
   (config) => {
     // console.log(config);
     // 在cookie中取出用户信息
-    const cookie = Cookie.get('userInfo');
-    config.headers['Set-Cookie'] = encodeURIComponent(cookie);
-    // post请求使用表单的形式提交
+    // const cookie = Cookie.get('userInfo');
+    // config.headers['Set-Cookie'] = encodeURIComponent(cookie);
+    const token = Cookie.get('token');
+    config.headers.Authorization = token;
+    // post请求使用JSON形式提交
     if (config.method === 'post') {
-      config.data = qs.stringify(config.data);
-      // config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      // config.data = qs.stringify(config.data);
+      config.headers['Content-Type'] = 'application/json';
     }
     return config;
   },

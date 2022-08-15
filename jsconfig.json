@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    // "target": "es5",
+    "baseUrl": "./",
+    "paths": {
+      "common/*": ["src/common/*"],
+      "assets/*": ["src/assets/*"],
+      "conponents/*": ["src/conponents/*"],
+      "pages/*":["src/pages/*"],
+    }
+  },
+  "exclude": ["node_modules"]
+}

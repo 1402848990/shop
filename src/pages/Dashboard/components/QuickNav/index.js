@@ -19,10 +19,10 @@ const MOCK_DATA = [
     to: '/goods',
   },
   {
-    title: '类目管理',
+    title: '藏品平台管理',
     icon: 'cart',
     color: '#ee706d',
-    to: '/categoryManage',
+    to: '/PlatformManage',
   },
   {
     title: '订单管理',

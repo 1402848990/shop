@@ -6,8 +6,11 @@ import Filter from '../Filter';
 import BaseTable from '../../../../common/BaseTable';
 
 export default function (props) {
-  const { data, isLoading, handleDelete, handleEdit, platformList, handleFilterChange } = props;
+  const { data, isLoading, handleDelete, handleEdit } = props;
 
+  const handleFilterChange = () => {
+    // fetchData(5);
+  };
 
   const columns = [
     {
@@ -17,20 +20,23 @@ export default function (props) {
       width: 120,
     },
     {
-      title: '藏品名称',
+      title: '平台名称',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: '所属藏品平台',
-      dataIndex: 'platformName',
-      key: 'platformName',
-      width: 300,
+      title: '平台LOGO',
+      dataIndex: 'logo',
+      key: 'logo',
+      width: 150,
+      render: (val) => {
+        return <img width="60px" src={val} />;
+      },
     },
     {
-      title: '所属平台ID',
-      dataIndex: 'platformId',
-      key: 'platformId',
+      title: '权重',
+      dataIndex: 'sortWeight',
+      key: 'sortWeight',
       width: 120,
     },
     {
@@ -76,11 +82,11 @@ export default function (props) {
 
   return (
     <div style={styles.container}>
+      {/* <IceContainer>
+        <Filter onChange={handleFilterChange} />
+      </IceContainer> */}
       <IceContainer>
-        <Filter onChange={handleFilterChange} platformList={platformList} />
-      </IceContainer>
-      <IceContainer>
-        <BaseTable loading={isLoading} columns={columns} dataSource={data} scrollX={1500} />
+        <BaseTable loading={isLoading} columns={columns} dataSource={data} scrollX={1300} />
       </IceContainer>
     </div>
   );

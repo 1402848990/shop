@@ -1,0 +1,9 @@
+{
+  "path-intellisense.mappings": {
+    "serverices": "${workspaceRoot}/src/serverices",
+    "common": "${workspaceRoot}/src/common",
+    "assets": "${workspaceRoot}/src/assets",
+    "conponents": "${workspaceRoot}/src/conponents",
+    "pages": "${workspaceRoot}/src/pages"
+  }
+}
