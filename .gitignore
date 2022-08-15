@@ -6,12 +6,12 @@
 # production
 /build
 /dist
+/config/*
 
 # misc
 .idea/
 .happypack
 .DS_Store
-/config
 
 npm-debug.log*
 yarn-debug.log*
