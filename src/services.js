@@ -98,7 +98,7 @@ export const addCategoryApi = async (data) => {
  */
 export const getCategoryListApi = async (data) => {
   const res = await axios({
-    url: '/v1/ClassificationAdmin/getClassificationList',
+    url: '/v2/Classification/getClassificationList',
     method: 'post',
     data,
   });
